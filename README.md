@@ -40,3 +40,11 @@ Sipariş etmemiş kullanıcıların getirilmesi istenmektedir.
 ```sql
 Select c.name AS 'Customers' from Customers c LEFT JOIN Orders o ON o.customerId = c.id where o.customerId is null;
 ```
+
+# Delete Duplicate Record
+Bu SQL sorgusu, Person tablosundaki her bir e-posta adresi için yalnızca birinci kaydı (min id) tutarak, e-posta adresi tekrar eden kişileri silmeyi amaçlar. Yani, her e-posta için sadece en düşük id'ye sahip olan kişi kalacak şekilde, diğer tüm kayıtlar silinir. Bu işlem, birleştirme (join) mantığıyla, aynı e-posta adresine sahip tüm kişilerden yalnızca bir tanesini seçip geri kalanlarını silmeye benzer.
+```sql
+DELETE
+FROM Person  where Id not in 
+(Select others_id from (Select min(id) as others_id from Person group by email) as tmp)
+```
