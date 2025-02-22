@@ -34,3 +34,9 @@ WHERE emp.salary > emp2.salary
 AND emp.managerId IS NOT NULL;
 
 ```
+
+# Customers Who Never Order
+Sipariş etmemiş kullanıcıların getirilmesi istenmektedir.
+```sql
+Select c.name AS 'Customers' from Customers c LEFT JOIN Orders o ON o.customerId = c.id where o.customerId is null;
+```
